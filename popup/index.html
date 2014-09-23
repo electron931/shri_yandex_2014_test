@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Popup</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+	<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/smoothness/jquery-ui.css" />
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
+</head>
+
+<body>
+
+	<style>
+		body {
+			padding: 10px;
+		}
+
+		#dialog {
+			display: none;
+		}
+
+		.centerPopup{
+		background:#dee;
+		display:inline;/*IE6*/
+		float:left;
+		height:100px;
+		position:fixed;
+		width:auto;/*can be % px auto*/
+		z-index:200;
+	}
+	</style>
+
+	<button id="showPopupButton" type="button" class="btn btn-default">Show Popup!</button>
+
+	<div class="centerPopup">
+		.centerPopup - centered by width and height of browser viewport
+	</div>
+
+
+
+	<div id="dialog" title="Popup">
+		<p>Yandex =)</p>
+	</div>
+
+	<script>
+
+		var showPopupButton = document.getElementById("showPopupButton");
+		showPopupButton.addEventListener('click', function(event) {
+			showPopup();
+		});
+
+
+
+
+		function showPopup() {
+			$(function() {
+				$( "#dialog" ).dialog();
+			});
+		}
+
+		
+		$(function centerPopup(){
+			$('.centerPopup').each(function(){
+				$(this).css('left',($(window).width()-$(this).outerWidth())/ 2 + 'px');
+				$(this).css('top',($(window).height()-$(this).outerHeight())/ 2 + 'px');
+			});
+		});
+
+	</script>
+
+</body>
+
+</html>
