@@ -79,9 +79,9 @@
       
 
       /*
-	   		jQuery plugin that converts your ordinary elements into an equalizer
+	   	jQuery plugin that converts your ordinary elements into an equalizer
       */
-      (function ($) {
+    (function ($) {
 
       	$.fn.equalizer = function(options) {
 
@@ -116,28 +116,26 @@
 	        }
 
 
-	        
-
       		setInterval(function() {
       			$(thisObject.selector + ' span').each(function (i) {
-	              var colHeight = Math.round(thisObject.height() * Math.random());
-	              $(this).animate(
-		              { height: colHeight },
-		              settings.timeout
-		          );
+		            var colHeight = Math.round(thisObject.height() * Math.random());
+		            $(this).animate(
+			            { height: colHeight },
+			            settings.timeout
+			        );
 
 	          });
 	      
 	          $(thisObject.selector + ' span').animate(
-	              { height: $(thisObject).height() / 2 },
-	              settings.timeout
+		            { height: $(thisObject).height() / 2 },
+		            settings.timeout
 	          );
-	      		}, settings.frequency);
+	      	}, settings.frequency);
 
-			};
+		};
 
 		
-      } (jQuery));
+    } (jQuery));
 
 
 
