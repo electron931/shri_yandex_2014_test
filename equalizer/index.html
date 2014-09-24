@@ -57,40 +57,104 @@
               });
           }
       		
-
-
-          //run_equalizer(selector, timeout);
       }
       
       function run_equalizer (selector, timeout) {
       	
           $(selector + ' span').each(function (i) {
               var colHeight = Math.round($(selector).height() * Math.random());
-              //$(this).height(colHeight);
               $(this).animate(
-	              {height: colHeight},
+	              { height: colHeight },
 	              timeout
 	          );
 
           });
       
           $(selector + ' span').animate(
-              {height: $(selector).height()/2},
+              { height: $(selector).height()/2 },
               timeout
           );
       }
       
-      window.onload = function () {
-          setEqualizer('#eq_1 .equalizer', 1000, 2);
-          setEqualizer('#eq_2 .equalizer', 1000, 2);
-          setEqualizer('#eq_3 .equalizer', 1000, 2);
+      
 
-          setInterval(function() {
-          	run_equalizer('#eq_1 .equalizer', 1000);
-          	run_equalizer('#eq_2 .equalizer', 1000);
-          	run_equalizer('#eq_3 .equalizer', 1000);
-          }, 1000);
+      /*
+	   		jQuery plugin that converts your ordinary elements into an equalizer
+      */
+      (function ($) {
+
+      	$.fn.equalizer = function(options) {
+
+      		var thisObject = this;
+
+	      	var settings = $.extend({
+	      		colWidth: 2,
+	            timeout: 1000,
+	            frequency: 1000
+	        }, options );
+
+	        thisObject.css({
+	            verticalAlign: 'bottom',
+	            lineHeight: this.height() + 'px'
+	        });
+	      
+	        var colQuantity = Math.ceil( thisObject.width() / settings.colWidth);
+	        var cols = new Array(colQuantity);
+	        for (var i = 0; i < cols.length; i++) {
+	            var span = $('<span/>').appendTo(thisObject);
+	            span.css({
+	                verticalAlign: 'bottom',
+	                display: 'inline-block',
+	      
+	                fontSize: 0,
+	                lineHeight: 0,
+	      
+	                width: settings.colWidth,
+	                background: 'pink',
+	                borderTop: '2px solid red'
+	            });
+	        }
+
+
+	        
+
+      		setInterval(function() {
+      			$(thisObject.selector + ' span').each(function (i) {
+	              var colHeight = Math.round(thisObject.height() * Math.random());
+	              $(this).animate(
+		              { height: colHeight },
+		              settings.timeout
+		          );
+
+	          });
+	      
+	          $(thisObject.selector + ' span').animate(
+	              { height: $(thisObject).height() / 2 },
+	              settings.timeout
+	          );
+	      		}, settings.frequency);
+
+			};
+
+		
+      } (jQuery));
+
+
+
+      window.onload = function () {
+		$("#eq_1 .equalizer").equalizer();
+		$("#eq_2 .equalizer").equalizer({
+			colWidth: 3,
+			timeout: 750,
+			frequency: 750
+		});
+		$("#eq_3 .equalizer").equalizer({
+			colWidth: 4,
+			timeout: 500,
+			frequency: 500
+		});
       }
+
 
     </script>
   </head>
