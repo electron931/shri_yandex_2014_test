@@ -11,12 +11,13 @@
             
             var svgWidth = window.innerWidth - 50;
             var svgHeight = window.innerHeight - 50;
-            var CIRCLES_COUNT = 40;
-            var RADIUS = 20;
-            var VELOCITY = 1.5;
+            var CIRCLES_COUNT = 100;
+            var RADIUS = 10;
+            var VELOCITY = 5;
             var h_x = 100;                                      //x-axis step
             var h_y = 100;                                      //y-axis step
             var ANGLE_IN_RADIAN = (Math.PI / 180).toFixed(3);
+            var MOUSE_RADIUS = 5;  //defines how close to the cursor (px) the circles can approach
 
             var dataset = [];       //main array where all circles coordinates (x, y) will be stored 
             var x = 50;             //start X-position
@@ -51,6 +52,7 @@
                         .attr("width", svgWidth)
                         .attr("height", svgHeight);
 
+            
 
             svg.selectAll("circle")
                .data(dataset)
@@ -67,25 +69,14 @@
                .attr("stroke", "yellow")
                .attr("id", function(d, i) {
                     return "id" + i; 
-               })
-               .on("mouseover", function (d, i) {
-                    
-                    if (d3.event.pageX < dataset[i][0]) {
-                        dataset[i][0] += RADIUS;
-                    }
-                    else {
-                        dataset[i][0] -= RADIUS;
-                    }
+               });
 
-                    if (d3.event.pageY < dataset[i][1]) {
-                        dataset[i][1] += RADIUS;
-                    }
-                    else {
-                        dataset[i][1] -= RADIUS;
-                    }  
-                    
-                });
 
+            var mouseCoordinates = [0, 0];
+
+            svg.on("mousemove", function() {
+                mouseCoordinates = d3.mouse(this);
+            });
 
 
             
@@ -151,8 +142,22 @@
                         if (collide) {
                             var temp = angles[i];
                             angles[i] = angles[j];
-                            angles[j] = temp; 
+                            angles[j] = temp;
+
+                            dataset[i][0] += VELOCITY * Math.cos(angles[i] * ANGLE_IN_RADIAN);
+                            dataset[i][1] += VELOCITY * Math.sin(angles[i] * ANGLE_IN_RADIAN);
                         }
+                    }
+
+
+                    //running from the cusror
+                    if ( Math.abs(dataset[i][0] - mouseCoordinates[0]) < MOUSE_RADIUS) {
+                        angles[i] = 180 - angles[i];
+                        dataset[i][0] += VELOCITY * Math.cos(angles[i] * ANGLE_IN_RADIAN);
+                    }
+                    if ( Math.abs(dataset[i][1] - mouseCoordinates[1]) < MOUSE_RADIUS) {
+                        angles[i] = 360 - angles[i];
+                        dataset[i][1] += VELOCITY * Math.sin(angles[i] * ANGLE_IN_RADIAN);
                     }
                     
                 }
@@ -205,6 +210,8 @@
             function getRandomInt(min, max) {
                 return Math.floor(Math.random() * (max - min + 1)) + min;
             }
+
+            
 
         </script>
     </body>
