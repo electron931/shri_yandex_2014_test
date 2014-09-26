@@ -1,0 +1,77 @@
+<!-- http://www.css-jquery-design.com/2013/10/css3-modal-window-popups-sliding-forms-with-fancybox-effect/ -->
+<!DOCTYPE html>
+<html>
+<!-- using CSS3 -->
+<head>
+	<title>Popup CSS3</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+</head>
+
+<body>
+
+	<style>
+		body {
+			padding: 10px;
+		}
+
+		.overlay {
+		    background-color: rgba(0, 0, 0, 0.6);
+		    bottom: 0;
+		    cursor: default;
+		    left: 0;
+		    opacity: 0;
+		    position: fixed;
+		    right: 0;
+		    top: 0;
+		    visibility: hidden;
+		    z-index: 1;
+		    transition: opacity .5s;
+		}
+		.overlay:target {
+		    visibility: visible;
+		    opacity: 1;
+		}
+
+
+		.popup {
+			max-height: 90%;
+		    background-color: #fff;
+		    border: 3px solid #fff;
+		    display: inline-block;
+		    top: 40%;
+		    left: 50%; 								
+		    transform: translate(-50%, -50%);		
+		    color:#666;
+		    opacity: 0;
+		    padding: 15px;
+		    position: fixed;
+		    text-align: justify;
+		    visibility: hidden;
+		    z-index: 10;
+		    border-radius: 10px;
+		    box-shadow: 0 1px 1px 2px rgba(0, 0, 0, 0.4) inset;
+		    transition: opacity .5s, top .5s;
+		    overflow: auto;
+		}
+		.overlay:target+.popup {
+		    top: 50%;
+		    opacity: 1;
+		    visibility: visible;
+		}	
+
+	</style>
+
+       
+        <a href="#popup" id="show_popup">Show Popup</a>
+            
+
+        <a href="#" class="overlay" id="popup"></a>
+        
+        <div class="popup">
+            Lorem ipsum dolLorem ipsum dolor sit amet, consectetur adipiscing elit. Sed facilisis convallis consequat. 	Quisque ultricies felis et nisl rutrum tempus at non lorem. Donec rhoncus velit facilisis, posuere felis ut, aliquet enim. Donec ut lacus accumsan, aliquam orci vel, auctor felis. Praesent ut tempus nunc, at tristique urna. Fusce auctor tellus iaculis ante scelerisque egestas. Cras gravida augue vel lacinia placerat. Cras sagittis velit sapien. Vestibulum nec leo id mauris vehicula aliquam. Duis sagittis ex sit amet augue rhoncus, at elementum dui facilisis.Lorem ipsum dolLorem ipsum dolor sit amet, consectetur adipiscing elit. Sed facilisis convallis consequat. 	Quisque ultricies felis et nisl rutrum tempus at non lorem. Donec rhoncus velit facilisis, posuere felis ut, aliquet enim. Donec ut lacus accumsan, aliquam orci vel, auctor felis. Praesent ut tempus nunc, at tristique urna. Fusce auctor tellus iaculis ante scelerisque egestas. Cras gravida augue vel lacinia placerat. Cras sagittis velit sapien. Vestibulum nec leo id mauris vehicula aliquam. Duis sagittis ex sit amet augue rhoncus, at elementum dui facilisis.
+        </div>
+
+
+</body>
+
+</html>

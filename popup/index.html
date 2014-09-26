@@ -1,72 +1,61 @@
 <!DOCTYPE html>
 <html>
-
+<!-- using jQuery UI -->
 <head>
-	<title>Popup</title>
+	<title>jQuery UI Popup</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-	<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/smoothness/jquery-ui.css" />
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-	<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
+	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/smoothness/jquery-ui.css" />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
 </head>
 
 <body>
 
 	<style>
+		
 		body {
 			padding: 10px;
 		}
-
 		#dialog {
 			display: none;
 		}
 
-		.centerPopup{
-		background:#dee;
-		display:inline;/*IE6*/
-		float:left;
-		height:100px;
-		position:fixed;
-		width:auto;/*can be % px auto*/
-		z-index:200;
-	}
 	</style>
 
 	<button id="showPopupButton" type="button" class="btn btn-default">Show Popup!</button>
 
-	<div class="centerPopup">
-		.centerPopup - centered by width and height of browser viewport
-	</div>
-
-
-
-	<div id="dialog" title="Popup">
-		<p>Yandex =)</p>
+	<div id="dialog">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed facilisis convallis consequat. 	Quisque ultricies felis et nisl rutrum tempus at non lorem. Donec rhoncus velit facilisis, posuere felis ut, aliquet enim. Donec ut lacus accumsan, aliquam orci vel, auctor felis. Praesent ut tempus nunc, at tristique urna. Fusce auctor tellus iaculis ante scelerisque egestas. Cras gravida augue vel lacinia placerat. Cras sagittis velit sapien. Vestibulum nec leo id mauris vehicula aliquam. Duis sagittis ex sit amet augue rhoncus, at elementum dui facilisis.
+	Donec eget posuere elit. Sed ac rhoncus nunc, sed convallis quam. Vestibulum imperdiet ex eu sapien interdum, eu gravida augue efficitur. Suspendisse sit amet vestibulum felis. Phasellus dictum tincidunt pretium. Quisque convallis massa sapien, sed porttitor velit placerat id. Praesent rutrum felis ac erat ornare mattis. Nullam eget odio dolor. Nam ut ex et massa tristique facilisis id ac arcu. Pellentesque ac nibh sodales, ultricies massa non, aliquet odio. Integer ante felis, interdum pretium auctor in, tempor eget risus. Maecenas ac venenatis augue.
+	stibulum nec leo id mauris vehicula aliquam. Duis sagittis ex sit amet augue rhoncus, at elementum dui facilisis.
+	Donec eget posuere elit. Sed ac rhoncus nunc, sed convallis quam. Vestibulum imperdiet ex eu sapien interdum, eu gravida augue efficitur. Suspendisse sit amet vestibulum felis. Phasellus dictum tincidunt pretium. Quisque convallis massa sapien, sed porttitor velit placerat id. Praesent rutrum felis ac erat ornare mattis. Nullam eget odio dolor.
 	</div>
 
 	<script>
 
-		var showPopupButton = document.getElementById("showPopupButton");
-		showPopupButton.addEventListener('click', function(event) {
+
+		$("#showPopupButton").click(function() {
 			showPopup();
 		});
 
 
-
+		var maxWidth = 800;
+		var maxHeight = window.innerHeight - 50;
 
 		function showPopup() {
 			$(function() {
-				$( "#dialog" ).dialog();
+				$( "#dialog" ).dialog({ 
+					draggable: false,
+					resizable: false,
+					maxHeight: maxHeight,
+					width: 'auto',
+					create: function( event, ui ) {
+					    $(this).css("maxWidth", maxWidth + "px");
+					}
+				});
 			});
 		}
 
 		
-		$(function centerPopup(){
-			$('.centerPopup').each(function(){
-				$(this).css('left',($(window).width()-$(this).outerWidth())/ 2 + 'px');
-				$(this).css('top',($(window).height()-$(this).outerHeight())/ 2 + 'px');
-			});
-		});
-
 	</script>
 
 </body>

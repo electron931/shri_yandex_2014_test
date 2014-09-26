@@ -79,7 +79,7 @@
       
 
 	/*
-		jQuery plugin that converts your ordinary elements into an equalizer
+		jQuery plugin that converts your ordinary block elements into a super equalizer
 	*/
     (function ($) {
 
@@ -115,9 +115,10 @@
 	            });
 	        }
 
+	        var column = thisObject.selector + ' span';
 
       		setInterval(function() {
-      			$(thisObject.selector + ' span').each(function (i) {
+      			$(column).each(function (i) {
 		            var colHeight = Math.round(thisObject.height() * Math.random());
 		            $(this).animate(
 			            { height: colHeight },
@@ -126,7 +127,7 @@
 
 	            });
 	      
-	          $(thisObject.selector + ' span').animate(
+	          $(column).animate(
 		            { height: $(thisObject).height() / 2 },
 		            settings.timeout
 	          );
@@ -142,12 +143,12 @@
 	window.onload = function () {
 		$("#eq_1 .equalizer").equalizer();
 		$("#eq_2 .equalizer").equalizer({
-			colWidth: 3,
+			colWidth: 2,
 			timeout: 750,
 			frequency: 750
 		});
 		$("#eq_3 .equalizer").equalizer({
-			colWidth: 4,
+			colWidth: 2,
 			timeout: 500,
 			frequency: 500
 		});
