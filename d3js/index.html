@@ -158,7 +158,7 @@
                     }
                     if (Math.abs(dataset[i][1] - mouseCoordinates[1]) < MOUSE_RADIUS) {
                         angles[i] = 360 - angles[i];
-                        dataset[i][1] += VELOCITY * Math.cos(angles[i] * ANGLE_IN_RADIAN);
+                        dataset[i][1] += VELOCITY * Math.sin(angles[i] * ANGLE_IN_RADIAN);
                     }
                     
                     
