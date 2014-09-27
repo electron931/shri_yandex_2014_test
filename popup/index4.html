@@ -5,7 +5,7 @@
 	<title>Popup CSS&Javascript x2</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-	<style type="text/css">
+	<style>
 		body {
 			padding: 10px;
 		}
@@ -21,13 +21,14 @@
 		}
 
 		#popup {
-			max-width: 60%;
-	        max-height: 40%;
+			max-width: 70%;
+	        max-height: 60%;
 	        padding: 20px;
 	        position: fixed;
 	        z-index: 10;
 	        display: none;
 	        overflow: auto;
+	        border: 3px solid #999;
 	        border-radius: 10px;
 		    box-shadow: 0 1px 1px 2px rgba(0, 0, 0, 0.4);
 		    background-color: #fff;
@@ -63,8 +64,8 @@
 		function recalculateTopLeft() {
 			var popup = $("#popup");
 
-			var sceenWidth = window.innerWidth;
-			var screenHeight = window.innerHeight;
+			var sceenWidth = $(window).width();
+			var screenHeight = $(window).height();
 
 			var popupWidth = popup.width();
 			var popupHeight = popup.height();
@@ -98,7 +99,18 @@
 	<button id="showPopupButton" type="button" class="btn btn-default">Show Popup!</button>
 
 	<div id="popup">		
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dignissim orci in quam scelerisque aliquet. Sed tempus eget nisi nec accumsan. Curabitur ex felis, aliquet a sem non, iaculis tempor leo. Nam vitae feugiat urna. Phasellus maximus dolor ac dictum accumsan. Nam a auctor mauris. Aliquam mauris turpis, rhoncus malesuada eleifend non, rhoncus eget risus. Integer vel nunc est. Sed faucibus turpis et nisi 
+		<h2>Расчет свойств top и left с помощью Javascript</h2>	
+		<h3>Плюсы</h3>
+		<ul>
+			<li>Поддержка IE8</li>
+			<li>Мало разметки и стилей</li>
+			<li>Окно адаптивное</li>
+			<li>Ширина и высота зависят только от внутреннего контента</li>
+		</ul>
+		<h3>Минусы</h3>
+		<ul>
+			<li>Много Javascript кода</li>
+		</ul>
 
 	</div>
 
