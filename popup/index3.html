@@ -1,85 +1,69 @@
-<!-- http://www.webdesignerdepot.com/2012/10/creating-a-modal-window-with-html5-and-css3/ -->
 <!DOCTYPE html>
 <html>
-<!-- using CSS3 -->
 <head>
-	<title>Popup CSS3</title>
+	<meta charset="utf-8" />
+	<title>Popup CSS&Javascript</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-</head>
-
-<body>
-
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 	<style>
+	
 		body {
 			padding: 10px;
 		}
-
-		.modalDialog {
+		.overlay {
 			position: fixed;
-			font-family: Arial, Helvetica, sans-serif;
-			top: 0;
-			right: 0;
+			background-color: rgba(0,0,0, 0.2);
+			top:0;
+			left:0;
+			width: 100%;
+			height: 100%;
+			display: none;
+		}
+		#popup {
+			position: fixed;
+			margin: auto;
 			bottom: 0;
 			left: 0;
-			background: rgba(0,0,0,0.8);
-			z-index: 99999;
-			opacity:0;
-			-webkit-transition: opacity 400ms ease-in;
-			-moz-transition: opacity 400ms ease-in;
-			transition: opacity 400ms ease-in;
-			pointer-events: none;
-		}
-		
-		.modalDialog:target {
-			opacity:1;
-			pointer-events: auto;
-		}
+			top: 0;
+			right: 0;
+			width: 50%;
+			height: 50%;
+			overflow: auto;
+			padding:20px;
+			display: none;
+	        z-index: 10;
+	        border-radius: 10px;
+		    box-shadow: 0 1px 1px 2px rgba(0, 0, 0, 0.4);
+		    background-color: #fff;
+		}	
 
-		.modalDialog > div {
-			width: 400px;
-			margin: 10% auto;
-			position: relative;
-			padding: 5px 20px 13px 20px;
-			text-align: justify;
-			border-radius: 10px;
-			background: #fff;
-			background: -moz-linear-gradient(#fff, #999);
-			background: -webkit-linear-gradient(#fff, #999);
-			background: -o-linear-gradient(#fff, #999);
-		}
+	</style>	
+	<script>
+		$(document).ready(function() {
+			$("#showPopupButton").click(function() {
+				var popup = $("#popup");
+				popup.fadeIn();
 
-		.close {
-			background: #606061;
-			color: #FFFFFF;
-			line-height: 25px;
-			position: absolute;
-			right: -12px;
-			text-align: center;
-			top: -10px;
-			width: 24px;
-			text-decoration: none;
-			font-weight: bold;
-			border-radius: 12px;
-			box-shadow: 1px 1px 3px #000;
-		}
+				var overlay = $(".overlay");
+				overlay.show();
+				
+				overlay.click(function() {
+					overlay.hide();
+					popup.hide();
+				});
+			});
+		});
+	</script>
+</head>
+<body>
+	<div class="overlay"></div>
 
-		.close:hover { background: #00d9ff; }
-
-
-	</style>
-
-       
-    <a href="#openModal">Open Modal</a>
-
-	<div id="openModal" class="modalDialog">
-		<div>
-			<a href="#close" title="Close" class="close">X</a>
-			Lorem ipsum dolLorem ipsum dolor sit amet, consectetur adipiscing elit. Sed facilisis convallis consequat. 	Quisque ultricies felis et nisl rutrum tempus at non lorem. Donec rhoncus velit facilisis, posuere felis ut, aliquet enim. Donec ut lacus accumsan, aliquam orci vel, auctor felis. Praesent ut tempus nunc, at tristique urna. Fusce auctor tellus iaculis ante scelerisque egestas. Cras gravida augue vel lacinia placerat. Cras sagittis velit sapien. Vestibulum nec leo id mauris vehicula aliquam. Duis sagittis ex sit amet augue rhoncus, at elementum dui facilisis.Lorem ipsum dolLorem ipsum dolor sit amet, consectetur adipiscing elit. Sed facilisis convallis consequat. 	Quisque ultricies felis et nisl rutrum tempus at non lorem. Donec rhoncus velit facilisis, posuere felis ut, aliquet enim. Donec ut lacus accumsan, aliquam orci vel, auctor felis. Praesent ut tempus nunc, at tristique urna. Fusce auctor tellus iaculis ante scelerisque egestas. Cras gravida augue vel lacinia placerat. Cras sagittis velit sapien. Vestibulum nec leo id mauris vehicula aliquam. Duis sagittis ex sit amet augue rhoncus, at elementum dui facilisis.
+	<button id="showPopupButton" type="button" class="btn btn-default">Show Popup!</button>
 	
-		</div>
+	<div id="popup">		
+		Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dignissim orci in quam scelerisque aliquet. Sed tempus eget nisi nec accumsan. Curabitur ex felis, aliquet a sem non, iaculis tempor leo. Nam vitae feugiat urna. Phasellus maximus dolor ac dictum accumsan. Nam a auctor mauris. Aliquam mauris turpis, rhoncus malesuada eleifend non, rhoncus eget risus. Integer vel nunc est. Sed faucibus turpis et nisi dapibus, sit amet scelerisque lorem maximus. Donec facilisis, lorem ut placerat fringilla, velit ante dignissim arcu, eget egestas ante arcu sit amet risus. Morbi quis iaculis mauris. Aenean semper eget felis ac pretium. Aenean eu malesuada sapien. Morbi sodales lacus quis ante vehicula, porta bibendum est placerat. Phasellus lobortis aliquam quam a placerat. Pellentesque ut velit sodales, porttitor nisi sit amet, porttitor sapien.
+
 	</div>
 
-
 </body>
-
 </html>
