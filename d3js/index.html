@@ -11,7 +11,7 @@
             
             var svgWidth = window.innerWidth - 50;
             var svgHeight = window.innerHeight - 50;
-            var CIRCLES_COUNT = 100;
+            var CIRCLES_COUNT = 135;
             var RADIUS = 10;
             var VELOCITY = 3;
             var h_x = 75;                                      //x-axis step
@@ -152,12 +152,9 @@
 
                     
                     //running from the cusror
-                    if ( Math.abs(dataset[i][0] - mouseCoordinates[0]) < MOUSE_RADIUS) {
+                    if ( Math.abs(dataset[i][0] - mouseCoordinates[0]) < MOUSE_RADIUS || Math.abs(dataset[i][1] - mouseCoordinates[1]) < MOUSE_RADIUS) {
                         angles[i] = 180 - angles[i];
                         dataset[i][0] += VELOCITY * Math.cos(angles[i] * ANGLE_IN_RADIAN);
-                    }
-                    if (Math.abs(dataset[i][1] - mouseCoordinates[1]) < MOUSE_RADIUS) {
-                        angles[i] = 360 - angles[i];
                         dataset[i][1] += VELOCITY * Math.sin(angles[i] * ANGLE_IN_RADIAN);
                     }
                     
