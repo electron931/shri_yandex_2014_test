@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Brownian Motion</title>
+        <script src="//d3js.org/d3.v3.min.js"></script>
+    </head>
+    <body>
+
+        <script type="text/javascript">
+            
+            var svgWidth = window.innerWidth - 50;
+            var svgHeight = window.innerHeight - 50;
+            var CIRCLES_COUNT = 100;
+            var RADIUS = 10;
+            var VELOCITY = 2;
+            var h_x = 75;                                      //x-axis step
+            var h_y = 75;                                      //y-axis step
+            var ANGLE_IN_RADIAN = (Math.PI / 180).toFixed(3);
+            var MOUSE_RADIUS = 5;  //defines how close to the cursor (px) the circles can approach
+
+            var dataset = [];       //main array where all circles coordinates (x, y) will be stored 
+            var x = 50;             //start X-position
+            var y = 50;             //start Y-position
+
+            /*
+              CIRCLES_COUNT and actualCirclesCount variables may not be equal when
+                there is no space for all circles on the drawing area
+            */
+            var actualCirclesCount = 0;
+
+            //we place all circles in rows with steps h_x and h_y before we reach the end
+            for (var i = 0; i < CIRCLES_COUNT; i++) {
+                dataset.push([x, y]);
+                actualCirclesCount++;
+                x += h_x;
+                if (x >= svgWidth) {
+                    x = 50;
+                    y += h_y;
+                    if (y >= svgHeight) {
+                        //there is no more space
+                        break;
+                    }
+                }
+            }
+
+            console.log("Circles: " + actualCirclesCount + " of " + CIRCLES_COUNT);
+
+
+            var svg = d3.select("body")
+                        .append("svg")
+                        .attr("width", svgWidth)
+                        .attr("height", svgHeight);
+
+            
+
+            svg.selectAll("circle")
+               .data(dataset)
+               .enter()
+               .append("circle")
+               .attr("cx", function(d) {
+                    return d[0];
+               })
+               .attr("cy", function(d) {
+                    return d[1];
+               })
+               .attr("r", RADIUS)
+               .attr("fill", "red")
+               .attr("stroke", "yellow")
+               .attr("id", function(d, i) {
+                    return "id" + i; 
+               });
+
+
+            var mouseCoordinates = [0, 0];
+
+            svg.on("mousemove", function() {
+                mouseCoordinates = d3.mouse(this);
+            });
+
+
+            
+            var angles = [];           //array of random angles in which circles will start to move
+            var toggles = [];          //array of booleans (for randomly changing color)
+            for (var i = 0; i < actualCirclesCount; i++) {
+                angles.push(getRandomInt(0, 360));
+                toggles.push(true);
+            }
+
+
+            setInterval(render, 1000 / 60);
+
+
+            
+            //main render function
+            function render() {
+                changeCirclesCoordinates();
+                redrawCircles();
+                changeCirclesColor();
+            }
+
+
+
+
+
+            function changeCirclesCoordinates() {
+
+                for (var i = 0; i < actualCirclesCount; i++) {
+                    
+                    dataset[i][0] += VELOCITY * Math.cos(angles[i] * ANGLE_IN_RADIAN);
+
+                    //borders detection (width...
+                    if (dataset[i][0] <= RADIUS ) { 
+                        angles[i] = Math.abs( 180 - angles[i] );
+                        dataset[i][0] = RADIUS;
+                        dataset[i][0] += VELOCITY * Math.cos(angles[i] * ANGLE_IN_RADIAN);
+                    }
+                    if (dataset[i][0] >= svgWidth - RADIUS) {
+                        angles[i] = Math.abs( 180 - angles[i] );
+                        dataset[i][0] = svgWidth - RADIUS;
+                        dataset[i][0] += VELOCITY * Math.cos(angles[i] * ANGLE_IN_RADIAN);
+                    }
+
+                    dataset[i][1] += VELOCITY * Math.sin(angles[i] * ANGLE_IN_RADIAN);
+                    
+                    //...and height)
+                    if (dataset[i][1] <= RADIUS) {
+                        angles[i] = Math.abs( 360 - angles[i] );
+                        dataset[i][1] = RADIUS;
+                        dataset[i][1] += VELOCITY * Math.sin(angles[i] * ANGLE_IN_RADIAN);
+                    }
+                    if (dataset[i][1] >= svgHeight - RADIUS) {
+                        angles[i] = Math.abs( 360 - angles[i] );
+                        dataset[i][1] = svgHeight - RADIUS;
+                        dataset[i][1] += VELOCITY * Math.sin(angles[i] * ANGLE_IN_RADIAN);
+                    }
+
+
+                    //collision checking
+                    for (var j = i + 1; j < actualCirclesCount; j++) {
+                        var collide = isCollide(dataset[i][0], dataset[i][1], dataset[j][0], dataset[j][1]);
+                        if (collide) {
+                            var temp = angles[i];
+                            angles[i] = angles[j];
+                            angles[j] = temp;
+
+                            dataset[i][0] += VELOCITY * Math.cos(angles[i] * ANGLE_IN_RADIAN);
+                            dataset[i][1] += VELOCITY * Math.sin(angles[i] * ANGLE_IN_RADIAN);
+                        }
+                    }
+
+
+                    //running from the cusror
+                    if ( Math.abs(dataset[i][0] - mouseCoordinates[0]) < MOUSE_RADIUS || Math.abs(dataset[i][1] - mouseCoordinates[1]) < MOUSE_RADIUS) {
+                        angles[i] = 180 - angles[i];
+                        dataset[i][0] += VELOCITY * Math.cos(angles[i] * ANGLE_IN_RADIAN);
+                    }
+                    
+                    
+                }
+
+            }
+
+
+
+            function redrawCircles() {
+                svg.selectAll("circle")
+                   .attr("cx", function(d) {
+                        return d[0];
+                   })
+                   .attr("cy", function(d) {
+                        return d[1];
+                   });
+            }
+
+
+
+            function changeCirclesColor() {
+                var random = getRandomInt(0, actualCirclesCount);
+                if (toggles[random]) {
+                    svg.select("#id" + random)
+                       .transition()
+                       .duration(getRandomInt(100, 1000))
+                       .attr("fill", "yellow")
+                       .attr("stroke", "red");
+                }
+                else {
+                    svg.select("#id" + random)
+                       .transition()
+                       .duration(getRandomInt(100, 1000))
+                       .attr("fill", "red")
+                       .attr("stroke", "yellow");
+                }
+                toggles[random] = !toggles[random];
+            }
+
+
+
+            function isCollide(x1, y1, x2, y2) {
+                var distance = Math.ceil(Math.sqrt( 
+                    Math.abs(x2 - x1) * Math.abs(x2 - x1) + Math.abs(y2 - y1) * Math.abs(y2 - y1) ));
+                return (distance <= 2 * RADIUS);
+            }
+
+
+
+            function getRandomInt(min, max) {
+                return Math.floor(Math.random() * (max - min + 1)) + min;
+            }
+
+
+        </script>
+    </body>
+</html>

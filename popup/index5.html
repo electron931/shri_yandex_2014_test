@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>Popup :before</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<style>
+
+		body {
+			padding: 10px;
+		}
+
+		.overlay {
+		    background-color: rgba(0, 0, 0, 0.1);
+		    bottom: 0;
+		    cursor: default;
+		    left: 0;
+		    opacity: 0;
+		    position: fixed;
+		    right: 0;
+		    top: 0;
+		    visibility: hidden;
+		    z-index: 1;
+		}
+		.overlay:target {
+		    visibility: visible;
+		    opacity: 1;
+		}
+		.overlay:target+.popup {
+		    opacity: 1;
+		    visibility: visible;
+		}
+
+		.popup {
+			text-align: center;
+			height: 100%;
+			width: 100%;
+			top:0;
+			left:0;
+			visibility: hidden;
+			opacity: 0;
+		    position: absolute;
+		}
+		 
+		.popup:before { 
+			content: '';
+			display: inline-block;
+			height: 100%; 
+			vertical-align: middle;
+		 }
+		.popup > div {
+			text-align: left;
+			display: inline-block;
+			vertical-align: middle;
+			max-width: 50%;
+			max-height: 80%;
+			overflow: auto;
+			z-index: 10;
+			position: relative;
+			border-radius: 10px;
+		    box-shadow: 0 1px 1px 2px rgba(0, 0, 0, 0.4);
+		    background-color: #fff;
+		    padding: 20px;
+		}
+
+	</style>	
+</head>
+<body>
+	
+	<a href="#popup">Show Popup</a>
+
+	<a href="#" class="overlay" id="popup"></a>
+	<div class="popup">    
+	    <div>
+	    	<h2>Использование псевдоэлементов :before, :target</h2>	
+			<h3>Плюсы</h3>
+			<ul>
+				<li>Используется только CSS3 (без Javascript)</li>
+				<li>Окно адаптивное</li>
+				<li>Ширина и высота зависят только от внутреннего контента</li>
+			</ul>
+			<h3>Минусы</h3>
+			<ul>
+				<li>Не поддерживается в IE8</li>
+				<li>Метки в адресной строке (можно использовать javascript вместо :target)</li>
+			</ul>
+		</div>	    
+	</div>
+
+</body>
+</html>
