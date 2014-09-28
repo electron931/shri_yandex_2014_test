@@ -17,7 +17,7 @@
             var h_x = 75;                                      //x-axis step
             var h_y = 75;                                      //y-axis step
             var ANGLE_IN_RADIAN = (Math.PI / 180).toFixed(3);
-            var MOUSE_RADIUS = 5;  //defines how close to the cursor (px) the circles can approach
+            var MOUSE_RADIUS = 30;  //defines how close to the cursor (px) the circles can approach
 
             var dataset = [];       //main array where all circles coordinates (x, y) will be stored 
             var x = 50;             //start X-position
@@ -121,18 +121,18 @@
                         dataset[i][0] += VELOCITY * Math.cos(angles[i] * ANGLE_IN_RADIAN);
                     }
 
-                    dataset[i][1] += VELOCITY * Math.sin(angles[i] * ANGLE_IN_RADIAN);
+                    dataset[i][1] -= VELOCITY * Math.sin(angles[i] * ANGLE_IN_RADIAN);
                     
                     //...and height)
                     if (dataset[i][1] <= RADIUS) {
                         angles[i] = Math.abs( 360 - angles[i] );
                         dataset[i][1] = RADIUS;
-                        dataset[i][1] += VELOCITY * Math.sin(angles[i] * ANGLE_IN_RADIAN);
+                        dataset[i][1] -= VELOCITY * Math.sin(angles[i] * ANGLE_IN_RADIAN);
                     }
                     if (dataset[i][1] >= svgHeight - RADIUS) {
                         angles[i] = Math.abs( 360 - angles[i] );
                         dataset[i][1] = svgHeight - RADIUS;
-                        dataset[i][1] += VELOCITY * Math.sin(angles[i] * ANGLE_IN_RADIAN);
+                        dataset[i][1] -= VELOCITY * Math.sin(angles[i] * ANGLE_IN_RADIAN);
                     }
 
 
@@ -145,17 +145,18 @@
                             angles[j] = temp;
 
                             dataset[i][0] += VELOCITY * Math.cos(angles[i] * ANGLE_IN_RADIAN);
-                            dataset[i][1] += VELOCITY * Math.sin(angles[i] * ANGLE_IN_RADIAN);
+                            dataset[i][1] -= VELOCITY * Math.sin(angles[i] * ANGLE_IN_RADIAN);
                         }
                     }
 
 
 
                     //running from the cusror
-                    if ( Math.abs(dataset[i][0] - mouseCoordinates[0]) < MOUSE_RADIUS || Math.abs(dataset[i][1] - mouseCoordinates[1]) < MOUSE_RADIUS) {
-                        angles[i] = 180 - angles[i];
+                    if ( Math.abs(dataset[i][0] - mouseCoordinates[0]) < MOUSE_RADIUS && Math.abs(dataset[i][1] - mouseCoordinates[1]) < MOUSE_RADIUS) {
+                        var angle = Math.atan2(mouseCoordinates[1] - dataset[i][1], dataset[i][0] - mouseCoordinates[0]) / Math.PI * 180;
+                        angles[i] = (angle < 0) ? angle + 360 : angle;
                         dataset[i][0] += VELOCITY * Math.cos(angles[i] * ANGLE_IN_RADIAN);
-                        dataset[i][1] += VELOCITY * Math.sin(angles[i] * ANGLE_IN_RADIAN);
+                        dataset[i][1] -= VELOCITY * Math.sin(angles[i] * ANGLE_IN_RADIAN);
                     }
                     
                     
